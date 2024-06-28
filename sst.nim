@@ -9,7 +9,7 @@ const
   defaultDataSetsCfgFile = "datasets.txt"
   defaultDataSetsCfg = [
     ("AMO","https://psl.noaa.gov/data/correlation/amon.us.long.mean.data"),
-    ("NINA34","https://psl.noaa.gov/gcos_wgsp/Timeseries/Data/nino34.long.data")
+    ("NINA34","https://psl.noaa.gov/gcos_wgsp/Timeseries/Data/nino34.long.data"),
   ]
 
 type 

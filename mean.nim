@@ -20,16 +20,21 @@ func runningMean(data:seq[Data],winSize:int):seq[float] =
 
 func fmtFloat(f:float):string = f.formatFloat(ffDecimal,2).align 9
 
-let
-  filename = paramStr(1)&".txt"
-  window = try: parseInt paramStr(2) except:36
-  data = toSeq filename.linesToData
-  means = data.runningMean window
-  newData = data[0].date&" - window: "&($window)&"\n"&zip(data[window..data.high],means)
-    .mapIt(it[0].date&(it[1]).fmtFloat)
-    .join "\n"
+let filename =  try: paramStr(1)&".txt" except: "error"
 
-echo newData
-writeFile("runmean.txt",newData)
-echo "Wrote file: runmean.txt"
-echo "Type: plot runmean"
+if filename == "error":
+  echo "usage:"
+  echo "mean [filename] [window size]"
+else:
+  let
+    window = try: parseInt paramStr(2) except:36
+    data = toSeq filename.linesToData
+    means = data.runningMean window
+    newData = data[0].date&" - window: "&($window)&"\n"&zip(data[window..data.high],means)
+      .mapIt(it[0].date&(it[1]).fmtFloat)
+      .join "\n"
+  writeFile("mean.txt",newData)
+  echo "Wrote file: mean.txt"
+  echo "Type: plot mean"
+
+

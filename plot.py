@@ -21,15 +21,17 @@ if exists(fileName):
       values.append(float(l[1]))
       ticker += 1
   means = []
-  if exists("runmean.txt"):
+  if exists("mean.txt"):
     first = True
-    for line in open("runmean.txt"):
+    for line in open("mean.txt"):
       l = line.strip().split()
-      if first: first = False
+      if first: 
+        plt.title(line)
+        first = False
       else: 
         # print(l[1])
         means.append(float(l[1]))
-        print(means[len(means)-1])
+        # print(means[len(means)-1])
     for i in range(len(values)-len(means)):
       means.insert(i,np.nan)
   plt.plot(values)   
