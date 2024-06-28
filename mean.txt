@@ -1,4 +1,5 @@
-1865-Jan - window: 36
+NAO - running mean - window: 36
+1867-Dec    -0.34
 1868-Jan    -0.32
 1868-Feb    -0.22
 1868-Mar    -0.09

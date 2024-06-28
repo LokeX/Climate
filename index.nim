@@ -1,7 +1,7 @@
 import httpclient,os,strutils,times
 
 let
-  data = newHttpClient().getContent paramStr(1)
+  data = newHttpClient().getContent paramStr(2)
 
 var
   dataColumn:string
@@ -20,7 +20,7 @@ for line in data.splitLines:
   dataColumn.add line.splitWhitespace.toColumn
 
 echo dataColumn
-writeFile("index.txt",dataColumn)
+writeFile("index.txt",paramStr(1)&"\n"&dataColumn)
 echo "Wrote file: index.txt"
 echo "Type either:"
 echo "  plotmean index"
