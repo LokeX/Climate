@@ -1,4 +1,4 @@
 @echo off
-del runmean.txt
+del mean.txt
 py plot.py %1
 

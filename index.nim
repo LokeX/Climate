@@ -1,7 +1,14 @@
 import httpclient,os,strutils,times
 
+if paramCount() < 2:
+  echo "usage:"
+  echo "index [index name] [index url]"
+  quit()
+
 let
   data = newHttpClient().getContent paramStr(2)
+  label = paramStr(1)
+  filename = label.toLower&".txt"
 
 var
   dataColumn:string
@@ -16,13 +23,13 @@ func toColumn(dataLine:seq[string]):string =
       result.add dataLine[0]&"-"&($month).substr(0,2)&dataPoint.fmtLine&"\n"
 
 for line in data.splitLines:
-  try:discard line[0..3].parseInt except:continue
-  dataColumn.add line.splitWhitespace.toColumn
+  if (let words = line.splitWhitespace; words.len == 13): 
+    try:discard line[0..3].parseInt except:continue
+    dataColumn.add words.toColumn
 
-echo dataColumn
-writeFile("index.txt",paramStr(1)&"\n"&dataColumn)
-echo "Wrote file: index.txt"
+writeFile(filename,label&"\n"&dataColumn)
+echo "Wrote file: ",filename
 echo "Type either:"
-echo "  plotmean index"
-echo "  plot index"
+echo "  plotmean ",label
+echo "  plot ",label
 
