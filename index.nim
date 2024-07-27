@@ -13,7 +13,7 @@ let
 var
   dataColumn:string
 
-func fmtLine(s:string):string =
+template fmtLine(s:untyped):untyped =
   s.parseFloat.formatFloat(ffDecimal,2).align 9
 
 func toColumn(dataLine:seq[string]):string =

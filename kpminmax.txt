@@ -1108,3 +1108,4 @@ Kp monthly max disturbance
 2024-Mar     8.33
 2024-Apr     7.00
 2024-May     9.00
+2024-Jun     7.67

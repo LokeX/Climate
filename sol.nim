@@ -20,8 +20,6 @@ echo url
 let 
   data = newHttpClient().getContent url
 
-# echo "done downloading"
-
 var
   items:seq[Item]
   currentMonth:Month = Month(1)
@@ -57,7 +55,7 @@ for line in data.splitLines:
       aps.add ap
   except:discard
 
-func fmtAlign(f:float):string =
+template fmtAlign(f:untyped):untyped =
   f.formatFloat(ffDecimal,2).align(9)
 
 func kpCline(items:seq[Item]):seq[float] =
@@ -67,7 +65,7 @@ func kpCline(items:seq[Item]):seq[float] =
     accum += item.kpAvg-avg
     result.add accum
 
-func toDate(item:Item):string = 
+template toDate(item:Item):untyped = 
   item.year&"-"&($item.month).substr(0,2)
 
 let
@@ -80,6 +78,13 @@ for item in items.mitems:
   # echo item.kpNorm
   item.apNorm = item.apAvg-apMean
 
+proc writeMsg(s:string) =
+  echo ""
+  echo "Wrote file: ",s,".txt"
+  echo "Type: "
+  echo "plot ",s
+  echo "plotmean ",s
+
 writeFile(
   "kp.txt",
   "Kp index\n"&
@@ -87,8 +92,7 @@ writeFile(
   .mapIt(it.toDate&it.kpNorm.fmtAlign)
   .join "\n"
 )
-echo "Wrote file: kp.txt"
-echo "Type: plot kp"
+writeMsg "kp"
 writeFile(
   "ap.txt",
   "Ap index\n"&
@@ -96,8 +100,7 @@ writeFile(
   .mapIt(it.toDate&it.apNorm.fmtAlign)
   .join "\n"
 )
-echo "Wrote file: ap.txt"
-echo "Type: plot ap"
+writeMsg "ap"
 writeFile(
   "kpminmax.txt",
   "Kp monthly max disturbance\n"&
@@ -105,12 +108,10 @@ writeFile(
   .mapIt(it.toDate&it.kpMax.fmtAlign)
   .join "\n"
 )
-echo "Wrote file: kpminmax.txt"
-echo "Type: plot kpminmax"
+writeMsg "kpminmax"
 writeFile(
   "kpcline.txt",
   "Kp clines from mean\n"&
   zip(items,items.kpCline).mapIt(it[0].toDate&it[1].fmtAlign).join "\n"
 )
-echo "Wrote file: kpcline.txt"
-echo "Type: plot kpcline"
+writeMsg "kpcline"
