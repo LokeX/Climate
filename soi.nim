@@ -1,4 +1,4 @@
-import strutils,httpClient,sugar
+import strutils,httpClient
 from times import Month
 
 const
@@ -23,11 +23,10 @@ let
   entries = dataLines.parseEntries
   title = contentLines[0].splitWhitespace[2]
 
-echo title
-echo entries
+echo url
 writeFile("soi.txt",title&"\n"&entries)
 echo "wrote file: soi.txt"
-echo "type: "
-echo "plot soi"
-echo "plotmean soi"
+echo "type either: "
+echo "  plot soi"
+echo "  plotmean soi"
 
