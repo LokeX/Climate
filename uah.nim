@@ -5,10 +5,10 @@ type
 
 const
   datasets:array[Dataset,tuple[setName,url:string]] = [
-    ("Lower Troposphere","https://www.nsstc.uah.edu/data/msu/v6.0/tlt/uahncdc_lt_6.0.txt"),
-    ("Middle Troposphere","https://www.nsstc.uah.edu/data/msu/v6.0/tmt/uahncdc_mt_6.0.txt"),
-    ("TropoPause","https://www.nsstc.uah.edu/data/msu/v6.0/ttp/uahncdc_tp_6.0.txt"),
-    ("Lower Stratosphere","https://www.nsstc.uah.edu/data/msu/v6.0/tls/uahncdc_ls_6.0.txt")
+    ("Lower Troposphere","https://www.nsstc.uah.edu/data/msu/v6.1/tlt/uahncdc_lt_6.1.txt"),
+    ("Middle Troposphere","https://www.nsstc.uah.edu/data/msu/v6.1/tmt/uahncdc_mt_6.1.txt"),
+    ("TropoPause","https://www.nsstc.uah.edu/data/msu/v6.1/ttp/uahncdc_tp_6.1.txt"),
+    ("Lower Stratosphere","https://www.nsstc.uah.edu/data/msu/v6.1/tls/uahncdc_ls_6.1.txt")
   ]
 
 iterator toRows(dataLines:openArray[string]):string =
