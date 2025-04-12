@@ -16,16 +16,6 @@ const
 				width:7%;
 				color:white;
 			}
-      #textArea {
-				padding: 1px 1px 1px 10px;
-				width: 95%;
-				border-style: inset;
-				border: 3px groove;
-				border-radius: 5px;
-				border: 1px solid black;
-				background-color: rgb(27, 27, 27);
-				border-radius: 5px;
-			}
 		</style>
   </head>
   <body>
@@ -34,5 +24,3 @@ const
   </body>
 </html>
 """
-  startRssHTML* = """<div id="textArea">"""
-  endRssHTML* = """</div>"""
