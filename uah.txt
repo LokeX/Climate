@@ -75,7 +75,7 @@ UAH/Lower Troposphere/Globe
 1985-Jan    -0.44
 1985-Feb    -0.64
 1985-Mar    -0.59
-1985-Apr    -0.44
+1985-Apr    -0.43
 1985-May    -0.44
 1985-Jun    -0.48
 1985-Jul    -0.64
@@ -128,7 +128,7 @@ UAH/Lower Troposphere/Globe
 1989-Jun    -0.41
 1989-Jul    -0.31
 1989-Aug    -0.30
-1989-Sep    -0.21
+1989-Sep    -0.20
 1989-Oct    -0.28
 1989-Nov    -0.30
 1989-Dec    -0.17
@@ -200,7 +200,7 @@ UAH/Lower Troposphere/Globe
 1995-Jun     0.00
 1995-Jul    -0.06
 1995-Aug     0.15
-1995-Sep     0.05
+1995-Sep     0.06
 1995-Oct    -0.07
 1995-Nov    -0.05
 1995-Dec    -0.30
@@ -214,7 +214,7 @@ UAH/Lower Troposphere/Globe
 1996-Aug    -0.05
 1996-Sep    -0.02
 1996-Oct    -0.11
-1996-Nov    -0.11
+1996-Nov    -0.10
 1996-Dec    -0.20
 1997-Jan    -0.30
 1997-Feb    -0.24
@@ -416,7 +416,7 @@ UAH/Lower Troposphere/Globe
 2013-Jun     0.07
 2013-Jul    -0.09
 2013-Aug    -0.07
-2013-Sep     0.05
+2013-Sep     0.06
 2013-Oct     0.03
 2013-Nov    -0.09
 2013-Dec     0.02
@@ -503,7 +503,7 @@ UAH/Lower Troposphere/Globe
 2020-Sep     0.40
 2020-Oct     0.36
 2020-Nov     0.39
-2020-Dec     0.16
+2020-Dec     0.15
 2021-Jan     0.14
 2021-Feb     0.20
 2021-Mar     0.02
@@ -512,18 +512,18 @@ UAH/Lower Troposphere/Globe
 2021-Jun    -0.02
 2021-Jul     0.19
 2021-Aug     0.17
-2021-Sep     0.27
+2021-Sep     0.26
 2021-Oct     0.34
 2021-Nov     0.06
 2021-Dec     0.22
 2022-Jan     0.06
 2022-Feb     0.04
-2022-Mar     0.19
+2022-Mar     0.18
 2022-Apr     0.26
 2022-May     0.14
 2022-Jun     0.04
 2022-Jul     0.32
-2022-Aug     0.25
+2022-Aug     0.24
 2022-Sep     0.20
 2022-Oct     0.23
 2022-Nov     0.07
@@ -552,3 +552,6 @@ UAH/Lower Troposphere/Globe
 2024-Oct     0.75
 2024-Nov     0.64
 2024-Dec     0.62
+2025-Jan     0.45
+2025-Feb     0.50
+2025-Mar     0.58

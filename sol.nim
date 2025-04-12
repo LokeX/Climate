@@ -58,11 +58,18 @@ for line in data.splitLines:
 template fmtAlign(f:untyped):untyped =
   f.formatFloat(ffDecimal,2).align(9)
 
-func kpCline(items:seq[Item]):seq[float] =
-  let avg = items.mapIt(it.kpAvg).sum/(float)items.len
+# func kpCline(items:seq[Item]):seq[float] =
+#   let avg = items.mapIt(it.kpAvg).sum/(float)items.len
+#   var accum:float
+#   for item in items:
+#     accum += item.kpAvg-avg
+#     result.add accum
+
+func cline(items:seq[float]):seq[float] =
+  let avg = items.sum/(float)items.len
   var accum:float
   for item in items:
-    accum += item.kpAvg-avg
+    accum += item-avg
     result.add accum
 
 template toDate(item:Item):untyped = 
@@ -112,6 +119,12 @@ writeMsg "kpminmax"
 writeFile(
   "kpcline.txt",
   "Kp clines from mean\n"&
-  zip(items,items.kpCline).mapIt(it[0].toDate&it[1].fmtAlign).join "\n"
+  zip(items,items.mapIt(it.kpAvg).cline).mapIt(it[0].toDate&it[1].fmtAlign).join "\n"
 )
 writeMsg "kpcline"
+writeFile(
+  "apcline.txt",
+  "Ap clines from mean\n"&
+  zip(items,items.mapIt(it.apAvg).cline).mapIt(it[0].toDate&it[1].fmtAlign).join "\n"
+)
+writeMsg "apcline"

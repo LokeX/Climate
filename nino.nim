@@ -1,6 +1,7 @@
 from algorithm import reverse
 from sequtils import zip
 import strutils
+import htmlhead
 
 type Designation = enum neutral,laNina,elNino
 
@@ -56,8 +57,37 @@ func fgColor(designation:Designation):ForegroundColor =
     of laNina: fgBlue
     of neutral: fgWhite
 
+func htmlColor(designation:Designation):string =
+  case designation:
+    of elNino: "style=\"color:red;\""
+    of laNina: "style=\"color:blue;\""
+    of neutral: "style=\"color:green;\""
+
+template headerRow(cells:seq[string]):string =
+  var result:string
+  result.add "\t\t\t<tr>\n"
+  for i,cell in cells:
+    if i == 0: result.add "\t\t\t\t<th>&nbsp</th>\n"
+    result.add "\t\t\t\t<th>"&cell&"</th>\n"
+  result.add "\t\t\t</tr>\n"
+  result
+
+var
+  htmlFile = open("nino.html",fmWrite)
+
+htmlFile.write startHTML
+htmlFile.write "\t\t<table>\n"
+htmlFile.write headerRow labels.splitLines[1].splitWhitespace
 stdout.write labels
 for indexYear,year in years:
+  htmlFile.write "\t\t\t<tr>\n"
+  htmlFile.write "\t\t\t\t<td style=\"color:white;\">"&year&"\n"
   stdout.write "\n"&year
   for (value,ninoDesignation) in monthlyData.monthsOf indexYear:
-    stdout.styledWrite ninoDesignation.fgColor,value.formatFloat(ffDecimal,4).align 9
+    let val = value.formatFloat(ffDecimal,4).align 9
+    stdout.styledWrite ninoDesignation.fgColor,val
+    htmlFile.write "\t\t\t\t<td "&ninoDesignation.htmlColor&">"&val&"</td>\n"
+  htmlFile.write "\t\t\t</tr>\n"
+htmlFile.write "\t\t</table>\n"
+htmlFile.write endHTML
+htmlFile.close

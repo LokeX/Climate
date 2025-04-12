@@ -1115,3 +1115,6 @@ Kp monthly max disturbance
 2024-Oct     8.67
 2024-Nov     5.67
 2024-Dec     5.33
+2025-Jan     8.00
+2025-Feb     5.67
+2025-Mar     5.67
