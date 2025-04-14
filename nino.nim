@@ -7,7 +7,8 @@ template ninoSignal(value:float):int =
   if value >= 0.5: 1 elif value <= -0.5: -1 else: 0
 
 template carrySignal(oldSignal,newSignal:int):int =
-  if newSignal == 0 or oldSignal*newSignal < 0: 0 else: oldSignal+newSignal
+  if newSignal == 0 or oldSignal*newSignal < 0: newSignal 
+  else: oldSignal+newSignal
 
 func ninoSignals(values:openArray[float]):seq[int] =
   result.add carrySignal(0,values[0].ninoSignal)
@@ -28,10 +29,10 @@ func ninoDesignations(signals:openArray[int]):seq[Designation] =
         laNina
       elif signal >= 5: 
         elNino
-      elif signal != 0 and i < signals.high: 
-        result[i+1] 
-      else: 
+      elif signal == 0 or i == signals.high: 
         neutral
+      else: 
+        result[i+1] 
 
 func parse(lines:openArray[string]):(string,seq[string],seq[float]) =
   result[0] = lines[0]&"\n"&lines[1]
@@ -50,7 +51,6 @@ let
   (labels,years,values) = parse readFile("nina34matrix.txt").splitLines
   monthlyData = zip(values,values.ninoSignals.ninoDesignations)
 
-#Importing the terminal module breaks vs-code intellisense(- WTF?); so we delay to here
 from terminal import ForegroundColor,styledWrite
 
 template fgColor(designation:Designation):ForegroundColor =
@@ -111,8 +111,8 @@ for indexYear,year in years:
   htmlFile.write "\t\t\t\t<td style=\"color:white;\">"&year&"\n"
   stdout.write "\n"&year
   for (value,ninoDesignation) in monthlyData.monthsOf indexYear:
-    let val = value.formatFloat(ffDecimal,4).align 9
-    stdout.styledWrite ninoDesignation.fgColor,val
+    let val = value.formatFloat(ffDecimal,4)
+    stdout.styledWrite ninoDesignation.fgColor,val.align 9
     htmlFile.write "\t\t\t\t<td "&ninoDesignation.htmlColor&">"&val&"</td>\n"
   htmlFile.write "\t\t\t</tr>\n"
 htmlFile.write "\t\t</table>\n"
