@@ -106,12 +106,13 @@ htmlFile.write startHTML
 htmlFile.write "\t\t<table>\n"
 htmlFile.write headerRow labels.splitLines[1].splitWhitespace
 stdout.write labels
+var val:string
 for indexYear,year in years:
   htmlFile.write "\t\t\t<tr>\n"
   htmlFile.write "\t\t\t\t<td style=\"color:white;\">"&year&"\n"
   stdout.write "\n"&year
   for (value,ninoDesignation) in monthlyData.monthsOf indexYear:
-    let val = value.formatFloat(ffDecimal,4)
+    val = value.formatFloat(ffDecimal,4)
     stdout.styledWrite ninoDesignation.fgColor,val.align 9
     htmlFile.write "\t\t\t\t<td "&ninoDesignation.htmlColor&">"&val&"</td>\n"
   htmlFile.write "\t\t\t</tr>\n"

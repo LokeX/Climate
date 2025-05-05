@@ -10,6 +10,8 @@ let
   label = paramStr(1)
   filename = label.toLower&".txt"
 
+echo data
+
 var
   dataColumn:string
 
@@ -24,7 +26,8 @@ func toColumn(dataLine:seq[string]):string =
 
 for line in data.splitLines:
   if (let words = line.splitWhitespace; words.len == 13): 
-    try:discard line[0..3].parseInt except:continue
+    try: discard line[0..3].strip.parseInt 
+    except: continue
     dataColumn.add words.toColumn
 
 writeFile(filename,label&"\n"&dataColumn)
