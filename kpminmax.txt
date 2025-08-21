@@ -1118,3 +1118,7 @@ Kp monthly max disturbance
 2025-Jan     8.00
 2025-Feb     5.67
 2025-Mar     5.67
+2025-Apr     7.67
+2025-May     6.33
+2025-Jun     7.67
+2025-Jul     5.00

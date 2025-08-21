@@ -10,7 +10,7 @@ let
   label = paramStr(1)
   filename = label.toLower&".txt"
 
-echo data
+# echo data
 
 var
   dataColumn:string

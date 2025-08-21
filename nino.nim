@@ -62,7 +62,7 @@ template fgColor(designation:Designation):ForegroundColor =
 template htmlColor(designation:Designation):string =
   case designation:
     of elNino: "style=\"color:red;\""
-    of laNina: "style=\"color:dodgerblue;\""
+    of laNina: "style=\"color:#0096FF;\""
     of neutral: "style=\"color:green;\""
 
 func headerRow(cells:seq[string]):string =
