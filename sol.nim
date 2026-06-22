@@ -9,7 +9,6 @@ type
     year:string
     month:Month
     kpAvg,kpNorm,apAvg,apNorm:float
-    kpMax:float
 
 const
   url = "https://kp.gfz-potsdam.de/app/files/Kp_ap_since_1932.txt"
@@ -22,37 +21,34 @@ let
 
 var
   items:seq[Item]
-  currentMonth = Month(1)
+  currentMonth = -1
   currentYear = ""
   kps:seq[float]
-  aps:seq[int]
+  aps:seq[float]
 
 for line in data.splitLines:
   try:
     if line.len > 0 and line[0] != '#':
       let 
         columns = line.splitWhitespace
-        month = Month(columns[1].parseInt)
-        kp = columns[^3].parseFloat
-        ap = columns[^2].parseInt
-      kps.add kp
-      aps.add ap
+        month = columns[1].parseInt
+      kps.add columns[^3].parseFloat
+      aps.add columns[^2].parseFloat
       if columns[0] != currentYear:
         currentYear = columns[0]
         echo ""
         echo "parsing year: ",currentYear
-      if items.len == 0 or  month != currentMonth:
+      if month != currentMonth:
         currentMonth = month
         items.add (
           currentYear,
-          currentMonth,
+          Month(currentMonth),
           kps.sum/kps.len.toFloat,
           0.0,
-          aps.sum.toFloat/aps.len.toFloat,
+          aps.sum/aps.len.toFloat,
           0.0,
-          kps.max,
         )
-        echo ($currentMonth).align(12),
+        echo ($items[^1].month).align(12),
           ": (kp) ",
           items[^1].kpAvg.formatFloat(ffDecimal,2),
           " / (ap) ",
@@ -64,12 +60,8 @@ for line in data.splitLines:
 template fmtAlign(f:untyped):untyped =
   f.formatFloat(ffDecimal,2).align(9)
 
-# func kpCline(items:seq[Item]):seq[float] =
-#   let avg = items.mapIt(it.kpAvg).sum/(float)items.len
-#   var accum:float
-#   for item in items:
-#     accum += item.kpAvg-avg
-#     result.add accum
+template toDate(item:Item):untyped = 
+  item.year&"-"&($item.month).substr(0,2)
 
 func cline(items:seq[float]):seq[float] =
   let avg = items.sum/(float)items.len
@@ -77,9 +69,6 @@ func cline(items:seq[float]):seq[float] =
   for item in items:
     accum += item-avg
     result.add accum
-
-template toDate(item:Item):untyped = 
-  item.year&"-"&($item.month).substr(0,2)
 
 echo ""
 echo "Normalizing on period: ",items[0].year," - ",items[^1].year
@@ -115,13 +104,6 @@ writeFile(
   .join "\n"
 )
 writeMsg "ap"
-writeFile(
-  "kpminmax.txt",
-  "Kp monthly max disturbance\n"&
-  items
-  .mapIt(it.toDate&it.kpMax.fmtAlign)
-  .join "\n"
-)
 writeMsg "kpminmax"
 writeFile(
   "kpcline.txt",
