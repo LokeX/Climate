@@ -28,8 +28,9 @@ var
   aps:seq[int]
 
 for line in data.splitLines:
+  # echo line
   try:
-    if line[0] != '#':
+    if line.len > 0 and line[0] != '#':
       let 
         words = line.splitWhitespace
         month = Month(words[1].parseInt)
@@ -53,7 +54,7 @@ for line in data.splitLines:
         # echo items[^1]
       kps.add kp
       aps.add ap
-  except:discard
+  except: raise newException(CatchableError,"fuck")
 
 template fmtAlign(f:untyped):untyped =
   f.formatFloat(ffDecimal,2).align(9)
