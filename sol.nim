@@ -22,21 +22,27 @@ let
 
 var
   items:seq[Item]
-  currentMonth:Month = Month(1)
-  currentYear = "1932"
+  currentMonth = Month(1)
+  currentYear = ""
   kps:seq[float]
   aps:seq[int]
 
 for line in data.splitLines:
-  # echo line
   try:
     if line.len > 0 and line[0] != '#':
       let 
-        words = line.splitWhitespace
-        month = Month(words[1].parseInt)
-        kp = words[^3].parseFloat
-        ap = words[^2].parseInt
-      if month != currentMonth:
+        columns = line.splitWhitespace
+        month = Month(columns[1].parseInt)
+        kp = columns[^3].parseFloat
+        ap = columns[^2].parseInt
+      kps.add kp
+      aps.add ap
+      if columns[0] != currentYear:
+        currentYear = columns[0]
+        echo ""
+        echo "parsing year: ",currentYear
+      if items.len == 0 or  month != currentMonth:
+        currentMonth = month
         items.add (
           currentYear,
           currentMonth,
@@ -46,15 +52,14 @@ for line in data.splitLines:
           0.0,
           kps.max,
         )
+        echo ($currentMonth).align(12),
+          ": (kp) ",
+          items[^1].kpAvg.formatFloat(ffDecimal,2),
+          " / (ap) ",
+          items[^1].apAvg.formatFloat(ffDecimal,2)
         kps.setLen 0
         aps.setLen 0
-        currentMonth = month
-        if words[0] != currentYear:
-          currentYear = words[0]
-        # echo items[^1]
-      kps.add kp
-      aps.add ap
-  except: raise newException(CatchableError,"fuck")
+  except: discard
 
 template fmtAlign(f:untyped):untyped =
   f.formatFloat(ffDecimal,2).align(9)
@@ -76,14 +81,15 @@ func cline(items:seq[float]):seq[float] =
 template toDate(item:Item):untyped = 
   item.year&"-"&($item.month).substr(0,2)
 
+echo ""
+echo "Normalizing on period: ",items[0].year," - ",items[^1].year
+
 let
   kpMean = items.mapIt(it.kpAvg).sum/items.len.toFloat
   apMean = items.mapIt(it.apAvg).sum/items.len.toFloat
 
 for item in items.mitems:
-  # echo item.kpNorm
   item.kpNorm = item.kpAvg-kpMean
-  # echo item.kpNorm
   item.apNorm = item.apAvg-apMean
 
 proc writeMsg(s:string) =
